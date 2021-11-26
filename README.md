@@ -1,6 +1,6 @@
 # News App
 
-A new Flutter project.
+Flutter application for review differents news of USA by differents categories.
 
 ## Getting Started
 
