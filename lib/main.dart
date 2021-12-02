@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/screens/article_details.dart';
 import 'package:news_app/screens/home.dart';
 import 'package:news_app/themes/mainTheme.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/' : (context) => HomeScreen(),
-
+        '/article-details' : (context) => ArticleDetails(),
       },
     );
   }

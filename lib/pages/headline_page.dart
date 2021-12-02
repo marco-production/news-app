@@ -18,7 +18,7 @@ class _HeadlinePageState extends State<HeadlinePage> with AutomaticKeepAliveClie
 
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: const Text('Top Headlines'), backgroundColor: Colors.red,),
+      appBar: AppBar(title: const Text('Top Headlines'), backgroundColor: Colors.redAccent),
       body: Container(
         color: Colors.white,
         child: NewsList(articles: newProvider.topHeadlines),

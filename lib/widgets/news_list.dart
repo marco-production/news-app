@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/models.dart';
+import 'package:news_app/utils/functions.dart';
 
 class NewsList extends StatelessWidget {
   NewsList({Key? key, required this.articles}) : super(key: key);
@@ -44,13 +45,13 @@ class ArticleContainer extends StatelessWidget {
             Text(article.title, style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             //Image of Article
-            _ArticleImageContainer(image: article.urlToImage),
+            _ArticleImageContainer(url: article.url, image: article.urlToImage),
             const SizedBox(height: 10),
             //Description of Article
             Text(article.description ?? ''),
             const SizedBox(height: 15),
             //Action Buttons
-            const _ArticleActionButtons(),
+            _ArticleActionButtons(article: article),
             const SizedBox(height: 20),
             total != index + 1 ? const Divider() : Container(),
             total != index + 1 ? const SizedBox(height: 5) : Container(),
@@ -92,38 +93,39 @@ class _ArticleImageContainer extends StatelessWidget {
   const _ArticleImageContainer({
     Key? key,
     required this.image,
+    required this.url,
   }) : super(key: key);
 
   final String? image;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(40), bottomRight: Radius.circular(40)),
-        child: Container(
-            child: FadeInImage(
+    return Hero(
+      tag: url,
+      child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(40), bottomRight: Radius.circular(40)),
+          child: FadeInImage(
                 fit: BoxFit.cover,
                 placeholder: const AssetImage('assets/placeholder.gif'),
-                image: articleImage())));
-  }
-
-  ImageProvider articleImage() {
-    if (image == null) {
-      return const AssetImage('assets/no-image.png');
-    } else {
-      return NetworkImage(image!);
-    }
+                image: articleImage(image)),
+          ),
+    );
   }
 }
 
 class _ArticleActionButtons extends StatelessWidget {
-  const _ArticleActionButtons({
+  _ArticleActionButtons({
     Key? key,
+    required this.article,
   }) : super(key: key);
+
+  final Article article;
 
   @override
   Widget build(BuildContext context) {
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,11 +138,14 @@ class _ArticleActionButtons extends StatelessWidget {
             child: const Icon(Icons.star, color: Colors.white)),
         const SizedBox(width: 25),
         RawMaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed('/article-details', arguments: article);
+            },
             fillColor: Colors.lightBlue,
             shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: const Icon(Icons.more, color: Colors.white)),
+            child: const Icon(Icons.more, color: Colors.white)
+        ),
       ],
     );
   }

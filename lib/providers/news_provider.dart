@@ -31,7 +31,7 @@ class NewsProvider extends ChangeNotifier {
     Category(FontAwesomeIcons.tv, "entertainment"),
   ];
 
-  Map<String, List<Article>> _categoryArticle = {};
+  final Map<String, List<Article>> _categoryArticle = {};
 
   set category(String category){
     _categorySelected = category;
